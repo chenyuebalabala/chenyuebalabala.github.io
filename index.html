@@ -19,6 +19,7 @@ td {width:20px; height:20px; border:1px solid #eee; background:#f4f4f4}
 #btnStart {clear:both; width:100px; height:30px; margin-top:10px; padding:0; background:#bbb; color:#222; border:1px solid #fff; border-bottom-color:#000; border-right-color:#000; cursor:pointer}
 /* #snakeWrap {background-image: url();} */
 </style>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript">
 function $(str) {
 	return document.getElementById(str);
@@ -77,7 +78,7 @@ function initGrid() {
 		var col = document.createElement("tr");
 		for(var i = 0; i < WIDTH; i++) {
 			var row = document.createElement("td");
-			gridElems[i][j] = col.appendChild(row);
+			gridElems[i][j] = col.appendChild(row);  //完成表格和二维数组的映射
 		}
 		tbody.appendChild(col);
 	}
@@ -216,9 +217,9 @@ function randomPointer(startX,startY,endX,endY) {
 	endX = endX || WIDTH;
 	endY = endY || HEIGHT;
 	var p = [],
-		x = Math.floor(Math.random()*(endX - startX)) + startX,
+		x = Math.floor(Math.random()*(endX - startX)) + startX, //控制产生数据在WIDTH即表格横向范围
 		y = Math.floor(Math.random()*(endY - startY)) + startY;
-	if(carrier[x][y]) return randomPointer(startX,startY,endX,endY);
+	if(carrier[x][y]) return randomPointer(startX,startY,endX,endY);  //如果产生数据和蛇身重复了，则递归再次产生
 	p[0] = x;
 	p[1] = y;
 	return p;
@@ -227,6 +228,67 @@ function randomPointer(startX,startY,endX,endY) {
 function randowNum(start,end) {
 	return Math.floor(Math.random()*(end - start)) + start;
 }
+
+
+var startx, starty;
+//获得角度
+function getAngle(angx, angy) {
+    return Math.atan2(angy, angx) * 180 / Math.PI;
+};
+
+//根据起点终点返回方向 1向上 2向下 3向左 4向右 0未滑动
+function getDirection(startx, starty, endx, endy) {
+    var angx = endx - startx;
+    var angy = endy - starty;
+    var result = 0;
+
+    //如果滑动距离太短
+    if (Math.abs(angx) < 2 && Math.abs(angy) < 2) {
+        return result;
+    }
+
+    var angle = getAngle(angx, angy);
+    if (angle >= -135 && angle <= -45) {
+        result = 1;
+    } else if (angle > 45 && angle < 135) {
+        result = 2;
+    } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+        result = 3;
+    } else if (angle >= -45 && angle <= 45) {
+        result = 4;
+    }
+
+    return result;
+}
+//手指接触屏幕
+document.addEventListener("touchstart", function(e){
+    startx = e.touches[0].pageX;
+    starty = e.touches[0].pageY;
+}, false);
+//手指离开屏幕
+document.addEventListener("touchend", function(e) {
+    var endx, endy;
+    endx = e.changedTouches[0].pageX;
+    endy = e.changedTouches[0].pageY;
+    var direction = getDirection(startx, starty, endx, endy);
+    switch (direction) {
+        case 0:
+            break;
+        case 1:
+			directkey= 38;
+            break;
+        case 2:
+			directkey= 40;
+            break;
+        case 3:
+			directkey= 37;
+            break;
+        case 4:
+			directkey= 39;
+            break;
+        default:
+    }
+}, false);
 </script>
 </head>
 <body onselectstart="return false">
