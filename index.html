@@ -1,19 +1,20 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <title>贪吃蛇</title>
 <style type="text/css">
 * {margin:0; padding:0}
 body {background:#333; -moz-user-select:none; text-align:center; font-size:12px}
-table {margin:80px auto 10px auto; overflow:hidden; border-collapse:collapse; }
+table {margin:10px auto 10px auto; overflow:hidden; border-collapse:collapse; }
 td {width:20px; height:20px; border:1px solid #eee; background:#f4f4f4}
 .cover {background:#39c;}
 .food {background:#093}
 .block {background:#333}
 .brake {background:#f00}
 .skate {background:#00f}
-#say {margin-top:50px; color:white}
-#help {width:420px; margin:0 auto; line-height:17px; color:white}
+#say {margin-top:10px; color:white}
+#help {width:360px; margin:0 auto; line-height:17px; color:white}
 #help span {float:left; margin-right:10px}
 #help .box {width:15px; height:15px; margin-right:5px; border:1px solid white}
 #btnStart {clear:both; width:100px; height:30px; margin-top:10px; padding:0; background:#bbb; color:#222; border:1px solid #fff; border-bottom-color:#000; border-right-color:#000; cursor:pointer}
@@ -29,8 +30,8 @@ function $tag(str,target) {
 	return target.getElementsByTagName(str);
 }
 // global
-var WIDTH = 45, //网格宽度
-	HEIGHT = 45, //网格高度
+var WIDTH = 30, //网格宽度
+	HEIGHT = 30, //网格高度
 	SAY = ["相当不错","可以啊！","一个字，牛","差不多行了，别把游戏玩爆了"];
 var len = 3, //蛇的长度
 	speed, //爬行速度
@@ -295,12 +296,14 @@ document.addEventListener("touchend", function(e) {
 	<div id="say">贪吃蛇</div>
     <div id="snakeWrap"></div>
     <div id="help">
-    	<span class="box food"></span><span>绿色食物</span>
-        <span class="box block"></span><span>灰色毒品</span>
-        <span class="box skate"></span><span>蓝色滑板</span>
-        <span class="box brake"></span><span>红色刹车</span>
-        <span style="float:right">最高分：<strong id="score">0</strong></span>
-        <input type="button" id="btnStart" value="开始游戏" />
-    </div>
+    	<span class="box food"></span><span>食物</span>
+        <span class="box block"></span><span>毒品</span>
+        <span class="box skate"></span><span>滑板</span>
+        <span class="box brake"></span><span>刹车</span>
+		<span style="float:right">最高分：<strong id="score">0</strong></span>
+		
+	</div>
+	<div><input type="button" id="btnStart" value="开始游戏" />
+		</div>
 </body>
 </html>
